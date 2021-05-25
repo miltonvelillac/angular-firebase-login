@@ -1,5 +1,5 @@
 <p>main-login works!</p>
-<div class="box box--start" [ngClass]="{'box--transformation': btnClicked}">
+<div class="box" [ngClass]="{'box--transformation': btnClicked, 'box--moving': !btnClicked}">
     my box
 </div>
 <button (click)="btnClicked = !btnClicked">{{btnClicked ? 'show' : 'hide'}}</button>

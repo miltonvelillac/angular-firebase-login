@@ -1,0 +1,43 @@
+.session {
+  height: 100vh;
+  background-color: #EEE;
+  display: flex;
+
+  &__box {
+    flex: 1;
+    height: 500px;
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    background-color: #FCFCFC;
+    border-radius: 10px;
+
+    &__text {
+      flex: 0.7;
+      z-index: 100;
+      border-radius: 10px;
+
+      display: flex;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+
+      &__content {
+        background-color: rgba(130, 130, 130, 0.6);
+        color: #ffffff;
+        border-radius: 5px;
+        padding: 20px;
+        max-width: 330px;
+
+        &__button {
+          width: 150px;
+          background-color: rgba(0, 0, 0, 0.7);
+        }
+      }
+    }
+
+    &__form {
+      flex: 1;
+    }
+  }
+}

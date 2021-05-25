@@ -12,17 +12,33 @@
         opacity: 0;
         font-size: 3rem;
     }
-    &--start {
-        animation: wiggle 200ms 1s 8 alternate;
+    &--moving {
+        animation: wiggle 200ms 3s 8 alternate;
     }
 }
 
 
+// @keyframes wiggle {
+//     from {
+//         transform: rotateZ(0);
+//     }
+//     to {
+//         transform: rotateZ(10deg);
+//     }
+// }
+
 @keyframes wiggle {
-    from {
+    0% {
         transform: rotateZ(0);
+        background-color: red;
+        font-size: 4rem;
     }
-    to {
+    50% {
+        transform: rotateZ(-10deg);
+        background-color: blue;
+        font-size: 2rem;
+    }
+    100% {
         transform: rotateZ(10deg);
     }
 }

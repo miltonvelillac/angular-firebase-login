@@ -1,0 +1,16 @@
+<div class="session">
+    <main class="session__box">
+        <section  [@textContent]="isSignIn ? 'signIn' : 'signUp'" class="session__box__text">
+            <div  class="session__box__text__content">
+                <h1>Welcome Back!</h1>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                <button mat-raised-button color="primary" class="session__box__text__content__button" (click)="isSignIn = !isSignIn">{{isSignIn ? 'SIGN UP' : 'SIGN IN'}}</button>
+            </div>
+        </section>
+        <div [@formContent]="isSignIn ? 'signIn' : 'signUp'" class="session__box__form">
+            <app-sign-in *ngIf="isSignIn"></app-sign-in>
+            <app-sign-up *ngIf="!isSignIn"></app-sign-up>
+        </div>
+    </main>
+</div>
+<!-- <a [routerLink]="['/animations']" routerLinkActive="router-link-active">link </a> -->
