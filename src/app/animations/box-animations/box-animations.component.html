@@ -1,1 +1,10 @@
-<p>box-animations works!</p>
+<p>main-login works!</p>
+<div class="box box--start" [ngClass]="{'box--transformation': btnClicked}">
+    my box
+</div>
+<button (click)="btnClicked = !btnClicked">{{btnClicked ? 'show' : 'hide'}}</button>
+
+<hr>
+<div class="box" *ngIf="!btnClicked" [@enterAnimation]>
+    second box
+</div>
