@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { requiredFieldMessage, wrongEmailMessage, wrongPasswordMessage } from 'src/app/shared/utils/constants';
+import { passwordRegex } from 'src/app/shared/utils/regex';
 
 @Component({
   selector: 'app-sign-up',
@@ -10,6 +12,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class SignUpComponent implements OnInit {
 
   form: FormGroup = this.createForm();
+
+  uiMessages = {
+    requieredField: requiredFieldMessage,
+    wrongEmail: wrongEmailMessage,
+    wrongPasswor: wrongPasswordMessage
+  }
 
   constructor(
     private fb: FormBuilder
@@ -22,8 +30,8 @@ export class SignUpComponent implements OnInit {
     return this.fb.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.pattern(/^[A-Za-z0-9]{4,10}$/)]],
-      passwordRepeat: ['', [Validators.pattern(/^[A-Za-z0-9]{4,10}$/)]]
+      password: ['', [Validators.required, Validators.pattern(passwordRegex)]],
+      passwordRepeat: ['', [Validators.required, Validators.pattern(passwordRegex)]]
     });
   }
 
