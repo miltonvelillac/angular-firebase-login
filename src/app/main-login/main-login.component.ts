@@ -38,7 +38,7 @@ export const sesionStates  = {
       ]),
       transition(`${sesionStates.signUp.state} => ${sesionStates.signIn.state}`, [
         animate('2s', keyframes([
-          style({ opacity: 0.5, transform: 'translateX(70%)', width: '400px', backgroundImage: `url(${sesionStates.signIn.image})`, offset: 0.5 }),
+          style({ opacity: 0.5, transform: 'translateX(70%)', backgroundImage: `url(${sesionStates.signIn.image})`, offset: 0.5 }),
           style({ opacity: 0.9, transform: 'translateX(0)', offset: 1 })
         ]))
       ])      
@@ -50,8 +50,21 @@ export const sesionStates  = {
       state(sesionStates.signUp.state, style({
         transform: 'translateX(-70%)'
       })),
-      transition(`* => ${sesionStates.signIn.state}`, [
-        animate('2s')
+      transition(`void => *`, [
+        animate('2s', keyframes([
+            style({ opacity: 0 }),
+            style({ opacity: 1 })
+          ])
+        )
+      ]),
+      transition(`${sesionStates.signUp.state} => ${sesionStates.signIn.state}`, [
+        animate('2s', keyframes([
+            style({ opacity: 0 }),
+            style({ opacity: 0, transform: 'translateX(-50)' }),
+            style({ opacity: 0, transform: 'translateX(-60)' }),
+            style({ opacity: 1, transform: 'translateX(0)' })
+          ])
+        )
       ]),
       transition(`* => ${sesionStates.signUp.state}`, [
         animate('2s')

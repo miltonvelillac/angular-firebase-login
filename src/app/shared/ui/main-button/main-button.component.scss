@@ -1,0 +1,11 @@
+.mainButton {
+  background-color: #000;
+}
+
+:host-context(.medium) .mainButton {
+  width: 100%;
+}
+
+:host-context(.big) .mainButton {
+  width: 100%;
+}

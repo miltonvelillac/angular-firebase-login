@@ -4,7 +4,7 @@
             <div  class="session__box__text__content">
                 <h1>Welcome Back!</h1>
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                <button mat-raised-button color="primary" class="session__box__text__content__button" (click)="isSignIn = !isSignIn">{{isSignIn ? 'SIGN UP' : 'SIGN IN'}}</button>
+                <app-main-button class="medium" (click)="isSignIn = !isSignIn">{{isSignIn ? 'SIGN UP' : 'SIGN IN'}}</app-main-button>
             </div>
         </section>
         <div [@formContent]="isSignIn ? 'signIn' : 'signUp'" class="session__box__form">
