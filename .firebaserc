@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "angular-firebase-login-32c39": {
+      "hosting": {
+        "angular-firebase-login": [
+          "angular-firebase-login-32c39"
+        ]
+      }
+    }
+  }
+}
