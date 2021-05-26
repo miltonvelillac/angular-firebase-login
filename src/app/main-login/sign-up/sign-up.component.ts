@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import firebase from 'firebase/app';
 import { tap, distinctUntilChanged } from 'rxjs/operators';
+import { SessionUserService } from 'src/app/shared/services/session-user/session-user.service';
 
 import { requiredFieldMessage, wrongEmailMessage, wrongPasswordMessage, wrongRepeatPasswordMessage, wrongNameLengthMessage } from 'src/app/shared/utils/constants';
 import { FormsValidationsService } from 'src/app/shared/utils/forms-validations/forms-validations.service';
@@ -29,7 +31,8 @@ export class SignUpComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private formsValidationsService: FormsValidationsService
+    private formsValidationsService: FormsValidationsService,
+    private sessionUserService: SessionUserService
   ) { }
 
   ngOnInit(): void {
@@ -64,8 +67,15 @@ export class SignUpComponent implements OnInit {
     ).subscribe();
   }
 
-  signUp(): void {
-    
+  async signUp(): Promise<void> {
+    if (!this.form.valid) { return; }
+    const { email, password } = this.form.getRawValue();
+    try {
+      const userCredentials: firebase.auth.UserCredential = await this.sessionUserService.signUp(email, password);
+      console.log('signUp sucess', userCredentials);
+    } catch (error) {
+      console.log('Error..................', error)
+    }
   }
 
   getRepeatPasswordErrorMessage(): string | undefined {

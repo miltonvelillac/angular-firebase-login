@@ -1,5 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import firebase from 'firebase/app';
+
+import { SessionUserService } from 'src/app/shared/services/session-user/session-user.service';
 import { requiredFieldMessage, wrongEmailMessage, wrongPasswordMessage } from 'src/app/shared/utils/constants';
 import { passwordRegex } from 'src/app/shared/utils/regex';
 
@@ -19,12 +23,15 @@ export class SignInComponent implements OnInit {
     wrongPasswor: wrongPasswordMessage
   };
 
+  errorSignInMessage: string | undefined;
+
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef,
+    private sessionUserService: SessionUserService
   ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   createForm(): FormGroup {
     return this.fb.group({
@@ -33,8 +40,24 @@ export class SignInComponent implements OnInit {
     });
   }
 
-  login(): void {
-    
+  async login(): Promise<void> {
+    this.errorSignInMessage = undefined;
+    if (!this.form.valid) { return; }
+    const { email, password } = this.form.getRawValue();
+    // this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+
+    try {
+      const userCredentials: firebase.auth.UserCredential = await this.sessionUserService.signIn(email, password);
+      console.log('signUp sucess', userCredentials);
+    } catch (error) {
+      console.log('Error..................', error);
+      this.errorSignInMessage = error.message;
+      this.cdr.detectChanges();
+    }
+  }
+
+  onLoginSuccessful(result: any): void {
+    console.log('login', result);
   }
 
 }
