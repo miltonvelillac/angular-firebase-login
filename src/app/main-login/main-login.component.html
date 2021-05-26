@@ -1,13 +1,13 @@
 <div class="session">
     <main class="session__box">
-        <section  [@textContent]="isSignIn ? 'signIn' : 'signUp'" class="session__box__text">
+        <section  [@textContent]="checkIfItIsSignIon()" class="session__box__text">
             <div  class="session__box__text__content">
                 <h1>Welcome Back!</h1>
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
                 <app-main-button class="medium" (click)="isSignIn = !isSignIn">{{isSignIn ? 'SIGN UP' : 'SIGN IN'}}</app-main-button>
             </div>
         </section>
-        <div [@formContent]="isSignIn ? 'signIn' : 'signUp'" class="session__box__form">
+        <div [@formContent]="checkIfItIsSignIon()" class="session__box__form">
             <app-sign-in *ngIf="isSignIn"></app-sign-in>
             <app-sign-up *ngIf="!isSignIn"></app-sign-up>
         </div>
