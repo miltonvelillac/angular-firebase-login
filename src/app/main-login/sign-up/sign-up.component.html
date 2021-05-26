@@ -1,1 +1,26 @@
-<p>sign-up works!</p>
+<form *ngIf="form" [formGroup]="form" (ngSubmit)="signUp()" class="signup">
+    <h1>Create Account</h1>
+    <div class="signup__form">
+        <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput type="text" name="name" id="name" placeholder="Milton Velilla" formControlName="name" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput type="text" name="email" id="email" placeholder="milton.velillac@gmail.com"
+                formControlName="email" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" name="password" id="password" formControlName="password" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Repeat Your Password</mat-label>
+            <input matInput type="passwordRepeat" name="passwordRepeat" id="passwordRepeat"
+                formControlName="passwordRepeat" />
+        </mat-form-field>
+
+        <app-main-button class="big">Save</app-main-button>
+    </div>
+</form>

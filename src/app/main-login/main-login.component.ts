@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MainLoginComponentAnimation, sesionAnimationStates } from './main-login.component.animation';
 
 @Component({
   selector: 'app-main-login',
   templateUrl: './main-login.component.html',
   styleUrls: ['./main-login.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: MainLoginComponentAnimation.loginAnimation()
 })
 export class MainLoginComponent implements OnInit {
