@@ -38,8 +38,10 @@
             <mat-label>
                 <mat-icon matSuffix>lock</mat-icon> Repeat Your Password
             </mat-label>
-            <input matInput type="password" name="passwordRepeat" id="passwordRepeat"
-                formControlName="passwordRepeat" />
+            <input matInput type="password" name="passwordRepeat" formControlName="passwordRepeat" />
+            <mat-error *ngIf="getRepeatPasswordErrorMessage() as wrongPasswordMessage">
+                {{wrongPasswordMessage}}
+            </mat-error>
         </mat-form-field>
         <br>
         <app-main-button class="big">SIGN UP</app-main-button>
