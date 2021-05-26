@@ -4,10 +4,11 @@
         <mat-form-field appearance="outline">
             <mat-label>
                 <mat-icon matSuffix>face</mat-icon> Name
+                <mat-hint align="end">{{nameInput.value?.length || 0}}/{{maxNameCharacters}}</mat-hint>
             </mat-label>
-            <input matInput type="text" name="name" id="name" placeholder="Milton Velilla" formControlName="name" />
-            <mat-error *ngIf="form.get('name')?.errors?.required">
-                {{uiMessages.requieredField}}
+            <input matInput #nameInput type="text" name="name" id="name" placeholder="Milton Velilla" formControlName="name" />
+            <mat-error *ngIf="getNameErrorMessage() as nameErrorMessage">
+                {{nameErrorMessage}}
             </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
@@ -16,11 +17,8 @@
             </mat-label>
             <input matInput type="text" name="email" id="email" placeholder="milton.velillac@gmail.com"
                 formControlName="email" />
-            <mat-error *ngIf="form.get('email')?.errors?.required" id="emailRequiredError">
-                {{uiMessages.requieredField}}
-            </mat-error>
-            <mat-error *ngIf="form.get('email')?.errors?.email" id="emailError">
-                {{uiMessages.wrongEmail}}
+            <mat-error *ngIf="getEmailErrorMessage() as emailErrorMessage" id="emailRequiredError">
+                {{emailErrorMessage}}
             </mat-error>
         </mat-form-field>
 

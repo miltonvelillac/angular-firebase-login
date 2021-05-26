@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { tap, distinctUntilChanged } from 'rxjs/operators';
 
-import { requiredFieldMessage, wrongEmailMessage, wrongPasswordMessage, wrongRepeatPasswordMessage } from 'src/app/shared/utils/constants';
+import { requiredFieldMessage, wrongEmailMessage, wrongPasswordMessage, wrongRepeatPasswordMessage, wrongNameLengthMessage } from 'src/app/shared/utils/constants';
 import { FormsValidationsService } from 'src/app/shared/utils/forms-validations/forms-validations.service';
 import { passwordRegex } from 'src/app/shared/utils/regex';
 
@@ -14,15 +14,18 @@ import { passwordRegex } from 'src/app/shared/utils/regex';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SignUpComponent implements OnInit {
-
+  
+  maxNameCharacters = 50;
   form: FormGroup = this.createForm();
 
   uiMessages = {
     requieredField: requiredFieldMessage,
     wrongEmail: wrongEmailMessage,
     wrongPasswor: wrongPasswordMessage,
-    wrongRepeatPassword: wrongRepeatPasswordMessage
-  }
+    wrongRepeatPassword: wrongRepeatPasswordMessage,
+    wrongNameLength: wrongNameLengthMessage
+  };
+
 
   constructor(
     private fb: FormBuilder,
@@ -36,7 +39,7 @@ export class SignUpComponent implements OnInit {
 
   createForm(): FormGroup {
     return this.fb.group({
-      name: ['', [Validators.required]],
+      name: ['', [Validators.required, Validators.maxLength(this.maxNameCharacters)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.pattern(passwordRegex)]],
       passwordRepeat: ['']
@@ -70,6 +73,24 @@ export class SignUpComponent implements OnInit {
       return this.uiMessages.wrongPasswor;
     } else if(this.form?.get('passwordRepeat')?.errors?.invalidRepeatPassword) {
       return this.uiMessages.wrongRepeatPassword;
+    }
+    return undefined
+  }
+
+  getNameErrorMessage(): string | undefined {
+    if (this.form?.get('name')?.errors?.required) {
+      return this.uiMessages.requieredField;
+    } else if(this.form?.get('name')?.errors?.maxlength) {
+      return this.uiMessages.wrongNameLength.replace('{charactersNumber}', `${this.maxNameCharacters}`);      
+    }
+    return undefined
+  }
+
+  getEmailErrorMessage(): string | undefined {
+    if (this.form?.controls.email?.errors?.required) {
+      return this.uiMessages.requieredField;
+    } else if(this.form?.controls.email?.errors?.email) {
+      return this.uiMessages.wrongEmail;      
     }
     return undefined
   }
