@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+
 import { SharedModule } from '../shared/shared.module';
 
 import { MainLoginRoutingModule } from './main-login-routing.module';
@@ -24,7 +26,8 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
+    MatIconModule
   ]
 })
 export class MainLoginModule { }
