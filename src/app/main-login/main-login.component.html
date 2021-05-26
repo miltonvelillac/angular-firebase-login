@@ -1,10 +1,17 @@
 <div class="session">
     <main class="session__box">
-        <section  [@textContent]="checkIfItIsSignIon()" class="session__box__text">
-            <div  class="session__box__text__content">
-                <h1>Welcome Back!</h1>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                <app-main-button class="medium" (click)="isSignIn = !isSignIn">{{isSignIn ? 'SIGN UP' : 'SIGN IN'}}</app-main-button>
+        <section [@textContent]="checkIfItIsSignIon()" class="session__box__text">
+            <div class="session__box__text__content">
+                <ng-container *ngIf="isSignIn; else signUpText">
+                    <h1>Welcome Back!</h1>
+                    <p>It is nice to see you again please type your personal information</p>
+                </ng-container>
+                <ng-template #signUpText>
+                    <h1>Hello Friend!</h1>
+                    <p>Enter your personal information and start journey with us</p>
+                </ng-template>
+                <app-main-button class="medium" (click)="isSignIn = !isSignIn">{{isSignIn ? 'SIGN UP' : 'SIGN IN'}}
+                </app-main-button>
             </div>
         </section>
         <div [@formContent]="checkIfItIsSignIon()" class="session__box__form">
@@ -13,4 +20,3 @@
         </div>
     </main>
 </div>
-<!-- <a [routerLink]="['/animations']" routerLinkActive="router-link-active">link </a> -->
