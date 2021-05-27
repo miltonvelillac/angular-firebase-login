@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MainButtonComponent } from './ui/main-button/main-button.component';
 
 
@@ -11,7 +12,8 @@ import { MainButtonComponent } from './ui/main-button/main-button.component';
   ],
   imports: [
     CommonModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSnackBarModule
   ],
   exports: [
     MainButtonComponent

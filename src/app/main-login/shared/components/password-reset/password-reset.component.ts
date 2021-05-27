@@ -5,6 +5,10 @@ import { SessionUserService } from 'src/app/shared/services/session-user/session
 import { requiredFieldMessage, wrongEmailMessage } from 'src/app/shared/utils/constants';
 import { SessionLogicService } from '../../session-logic/session-logic.service';
 
+export const passwordResetDialogStates = {
+  sendResetPasswordOk: 'sendResetPasswordOk'
+};
+
 @Component({
   selector: 'app-password-reset',
   templateUrl: './password-reset.component.html',
@@ -50,6 +54,7 @@ export class PasswordResetComponent {
   async handleResetPassword(email: string): Promise<void> {
     try {
       await this.sessionUserService.sendResetPassword(email);
+      this.dialogRef.close(passwordResetDialogStates.sendResetPasswordOk);
     } catch (error) {
       this.errorResetPasswordMessage = this.sessionLogicService.addErrorMessage(error);
     } finally {

@@ -2,7 +2,10 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import firebase from 'firebase/app';
 import { SessionUserService } from 'src/app/shared/services/session-user/session-user.service';
+import { SnackBarService } from 'src/app/shared/ui/snack-bar/snack-bar.service';
+import { successSnackbarResetPasswordMessage } from 'src/app/shared/utils/constants';
 import { passwordRegex } from 'src/app/shared/utils/regex';
+import { passwordResetDialogStates } from '../shared/components/password-reset/password-reset.component';
 import { PasswordResetService } from '../shared/services/passwrod-reset/password-reset.service';
 import { SessionLogicService } from '../shared/session-logic/session-logic.service';
 
@@ -26,7 +29,8 @@ export class SignInComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private sessionUserService: SessionUserService,
     private sessionLogicService: SessionLogicService,
-    private passwordResetService: PasswordResetService
+    private passwordResetService: PasswordResetService,
+    private snackBarService: SnackBarService
   ) { }
 
   ngOnInit(): void {}
@@ -76,7 +80,12 @@ export class SignInComponent implements OnInit {
   }
 
   forgotYourPassword(): void {
-    this.passwordResetService.openDialog();
+    this.passwordResetService.openDialog()
+      .subscribe(result => {
+        if(result === passwordResetDialogStates.sendResetPasswordOk) {
+          this.snackBarService.openSnackBarSuccess(successSnackbarResetPasswordMessage);
+        }
+      });
   }
 
   onLoginSuccessful(result: any): void {

@@ -1,0 +1,27 @@
+.snackbar--success {
+  background: #009241;
+  color: #FFFFFF;
+}
+
+.snackbar--fail {
+  background: #CC0000;
+  color: #FFFFFF;
+}
+
+.snackbar--success .mat-button-wrapper  {
+  color: #FFFFFF;
+}
+
+.snackbar--fail .mat-button-wrapper  {
+  color: #FFFFFF;
+}
+
+.snackbar--success .mat-simple-snackbar-action button {
+  background-color: #00aa41;
+  border: 1px solid white;
+}
+
+.snackbar--fail .mat-simple-snackbar-action button {
+  background-color: #dc0000;
+  border: 1px solid white;
+}
