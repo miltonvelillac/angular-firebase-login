@@ -1,5 +1,9 @@
 .signup {
     padding: 50px;
+    &__title {
+        text-align: center;
+        font-weight: 500;
+    }
     &__social-media {
         margin-top: 30px;
         display: flex;

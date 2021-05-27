@@ -1,5 +1,13 @@
 .login {
     padding: 50px;
+
+    &__title {
+        text-align: center;
+        font-weight: 500;
+    }
+    &__spinner {
+        margin-bottom: 10px;
+    }
     &__social-media {
         margin-top: 30px;
         display: flex;
@@ -12,6 +20,10 @@
             & > a {
                 cursor: pointer;
             }
+
+            &--disabled {
+                opacity: 0.4;
+            }
         }
     }
     &__form {
@@ -19,3 +31,8 @@
         flex-direction: column;
     }
 }
+
+a[disabled] {
+    pointer-events: none;
+    cursor: default;
+ }

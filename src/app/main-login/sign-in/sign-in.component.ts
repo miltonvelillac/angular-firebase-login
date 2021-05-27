@@ -23,6 +23,7 @@ export class SignInComponent implements OnInit {
     wrongPasswor: wrongPasswordMessage
   };
 
+  signInLoading = false;
   errorSignInMessage: string | undefined;
 
   constructor(
@@ -40,18 +41,25 @@ export class SignInComponent implements OnInit {
     });
   }
 
-  async login(): Promise<void> {
+  login(): void {
     this.errorSignInMessage = undefined;
+    
     if (!this.form.valid) { return; }
-
+    
+    this.signInLoading = true;    
     const { email, password } = this.form.getRawValue();
+    this.handleLoginEmail(email, password);    
+  }
 
+  async handleLoginEmail(email: string, password: string): Promise<void> {
     try {
       const userCredentials: firebase.auth.UserCredential = await this.sessionUserService.signInEmail(email, password);
       console.log('signIp sucess', userCredentials);
     } catch (error) {
       console.log('Error..................', error);
       this.errorSignInMessage = error.message;
+    } finally {
+      this.signInLoading = false;
       this.cdr.detectChanges();
     }
   }
