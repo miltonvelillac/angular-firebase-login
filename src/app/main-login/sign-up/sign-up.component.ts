@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import firebase from 'firebase/app';
@@ -28,9 +29,13 @@ export class SignUpComponent implements OnInit {
     wrongNameLength: wrongNameLengthMessage
   };
 
+  signUpLoading = false;
+  errorSignUpMessage: string | undefined;
+
 
   constructor(
     private fb: FormBuilder,
+    private cdr: ChangeDetectorRef,
     private formsValidationsService: FormsValidationsService,
     private sessionUserService: SessionUserService
   ) { }
@@ -67,14 +72,26 @@ export class SignUpComponent implements OnInit {
     ).subscribe();
   }
 
-  async signUp(): Promise<void> {
+  signUp(): void {
+    this.errorSignUpMessage = undefined;
+
     if (!this.form.valid) { return; }
+
+    this.signUpLoading = true;
     const { email, password } = this.form.getRawValue();
+    this.singUpEmailHandle(email, password)
+  }
+  
+  async singUpEmailHandle(email: string, password: string): Promise<void> {
     try {
       const userCredentials: firebase.auth.UserCredential = await this.sessionUserService.signUpEmail(email, password);
       console.log('signUp sucess', userCredentials);
     } catch (error) {
-      console.log('Error..................', error)
+      console.log('Error..................', error);
+      this.errorSignUpMessage = error.message;
+    } finally {
+      this.signUpLoading = false;
+      this.cdr.detectChanges();
     }
   }
 

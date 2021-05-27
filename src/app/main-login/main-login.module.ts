@@ -12,6 +12,7 @@ import { MainLoginRoutingModule } from './main-login-routing.module';
 import { MainLoginComponent } from './main-login.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { SocialMediaSessionComponent } from './social-media-session/social-media-session.component';
 
 
 
@@ -19,7 +20,8 @@ import { SignUpComponent } from './sign-up/sign-up.component';
   declarations: [
     MainLoginComponent,
     SignInComponent,
-    SignUpComponent
+    SignUpComponent,
+    SocialMediaSessionComponent
   ],
   imports: [
     CommonModule,

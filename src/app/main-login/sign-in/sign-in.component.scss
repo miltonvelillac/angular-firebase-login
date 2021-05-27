@@ -13,18 +13,6 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        &__buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            & > a {
-                cursor: pointer;
-            }
-
-            &--disabled {
-                opacity: 0.4;
-            }
-        }
     }
     &__form {
         display: flex;

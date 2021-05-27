@@ -1,0 +1,11 @@
+.social-media-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  & > a {
+    cursor: pointer;
+  }
+  &--disabled {
+    opacity: 0.4;
+  }
+}
