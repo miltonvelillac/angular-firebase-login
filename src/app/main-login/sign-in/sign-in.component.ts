@@ -6,6 +6,7 @@ import firebase from 'firebase/app';
 import { SessionUserService } from 'src/app/shared/services/session-user/session-user.service';
 import { requiredFieldMessage, wrongEmailMessage, wrongPasswordMessage } from 'src/app/shared/utils/constants';
 import { passwordRegex } from 'src/app/shared/utils/regex';
+import { PasswordResetService } from '../shared/services/passwrod-reset/password-reset.service';
 import { SessionLogicService } from '../shared/session-logic/session-logic.service';
 
 @Component({
@@ -31,7 +32,8 @@ export class SignInComponent implements OnInit {
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
     private sessionUserService: SessionUserService,
-    private sessionLogicService: SessionLogicService
+    private sessionLogicService: SessionLogicService,
+    private passwordResetService: PasswordResetService
   ) { }
 
   ngOnInit(): void {}
@@ -78,7 +80,11 @@ export class SignInComponent implements OnInit {
       this.signInLoading = false;
       this.cdr.detectChanges();
     }
-  }  
+  }
+
+  forgotYourPassword(): void {
+    this.passwordResetService.openDialog();
+  }
 
   onLoginSuccessful(result: any): void {
     console.log('login', result);

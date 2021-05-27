@@ -13,7 +13,7 @@ import { MainLoginComponent } from './main-login.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { SocialMediaSessionComponent } from './social-media-session/social-media-session.component';
-
+import { PasswordResetComponent } from './shared/components/password-reset/password-reset.component';
 
 
 @NgModule({
@@ -21,7 +21,8 @@ import { SocialMediaSessionComponent } from './social-media-session/social-media
     MainLoginComponent,
     SignInComponent,
     SignUpComponent,
-    SocialMediaSessionComponent
+    SocialMediaSessionComponent,
+    PasswordResetComponent
   ],
   imports: [
     CommonModule,

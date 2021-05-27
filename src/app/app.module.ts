@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from 'src/environments/environment';
@@ -15,7 +17,10 @@ import { AppComponent } from './app.component';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig)
+    FormsModule,
+    ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
