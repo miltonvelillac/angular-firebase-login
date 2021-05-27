@@ -19,7 +19,7 @@ export class SessionUserService {
     return this.auth.createUserWithEmailAndPassword(email, password);
   }
 
-  signInGoogle(): Promise<firebase.auth.UserCredential> {
+  signInOrSignUpGoogle(): Promise<firebase.auth.UserCredential> {
     return this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
   }
 

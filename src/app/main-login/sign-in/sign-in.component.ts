@@ -58,7 +58,7 @@ export class SignInComponent implements OnInit {
 
   async loginGoogle(): Promise<void> {
     try {
-      const userCredentials: firebase.auth.UserCredential = await this.sessionUserService.signInGoogle();
+      const userCredentials: firebase.auth.UserCredential = await this.sessionUserService.signInOrSignUpGoogle();
       console.log('signIp Google sucess', userCredentials);
     } catch (error) {
       console.log('Error Gooogle..................', error);

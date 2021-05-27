@@ -78,6 +78,15 @@ export class SignUpComponent implements OnInit {
     }
   }
 
+  async signUpGoogle(): Promise<void> {
+    try {
+      const userCredentials: firebase.auth.UserCredential = await this.sessionUserService.signInOrSignUpGoogle();
+      console.log('signIp Google sucess', userCredentials);
+    } catch (error) {
+      console.log('Error Gooogle..................', error);
+    }
+  }
+
   getRepeatPasswordErrorMessage(): string | undefined {
     if (this.form?.get('passwordRepeat')?.errors?.pattern || this.form?.get('passwordRepeat')?.errors?.required) {
       return this.uiMessages.wrongPasswor;

@@ -1,5 +1,19 @@
 .signup {
     padding: 50px;
+    &__social-media {
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        &__buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            & > a {
+                cursor: pointer;
+            }
+        }
+    }
     &__form {
         display: flex;
         flex-direction: column;
