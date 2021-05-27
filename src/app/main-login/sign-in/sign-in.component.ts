@@ -1,13 +1,12 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 import firebase from 'firebase/app';
-
 import { SessionUserService } from 'src/app/shared/services/session-user/session-user.service';
-import { requiredFieldMessage, wrongEmailMessage, wrongPasswordMessage } from 'src/app/shared/utils/constants';
 import { passwordRegex } from 'src/app/shared/utils/regex';
 import { PasswordResetService } from '../shared/services/passwrod-reset/password-reset.service';
 import { SessionLogicService } from '../shared/session-logic/session-logic.service';
+
+
 
 @Component({
   selector: 'app-sign-in',
@@ -18,12 +17,6 @@ import { SessionLogicService } from '../shared/session-logic/session-logic.servi
 export class SignInComponent implements OnInit {
 
   form: FormGroup = this.createForm();
-
-  uiMessages = {
-    requieredField: requiredFieldMessage,
-    wrongEmail: wrongEmailMessage,
-    wrongPasswor: wrongPasswordMessage
-  };
 
   signInLoading = false;
   errorSignInMessage: string | undefined;

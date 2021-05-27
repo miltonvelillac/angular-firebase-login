@@ -1,15 +1,13 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 import firebase from 'firebase/app';
-import { tap, distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged, tap } from 'rxjs/operators';
 import { SessionUserService } from 'src/app/shared/services/session-user/session-user.service';
-
-import { requiredFieldMessage, wrongEmailMessage, wrongPasswordMessage, wrongRepeatPasswordMessage, wrongNameLengthMessage } from 'src/app/shared/utils/constants';
 import { FormsValidationsService } from 'src/app/shared/utils/forms-validations/forms-validations.service';
 import { passwordRegex } from 'src/app/shared/utils/regex';
 import { SessionLogicService } from '../shared/session-logic/session-logic.service';
+
 
 @Component({
   selector: 'app-sign-up',
@@ -21,14 +19,6 @@ export class SignUpComponent implements OnInit {
   
   maxNameCharacters = 50;
   form: FormGroup = this.createForm();
-
-  uiMessages = {
-    requieredField: requiredFieldMessage,
-    wrongEmail: wrongEmailMessage,
-    wrongPasswor: wrongPasswordMessage,
-    wrongRepeatPassword: wrongRepeatPasswordMessage,
-    wrongNameLength: wrongNameLengthMessage
-  };
 
   signUpLoading = false;
   errorSignUpMessage: string | undefined;
