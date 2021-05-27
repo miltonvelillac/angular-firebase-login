@@ -90,4 +90,12 @@ export class SignInComponent implements OnInit {
     console.log('login', result);
   }
 
+  getPasswordErrorMessage(): string | undefined {
+    return this.sessionLogicService.getPasswordErrorMessage(this.form?.controls.password?.errors);
+  }
+
+  getEmailErrorMessage(): string | undefined {
+    return this.sessionLogicService.getEmailErrorMessage(this.form?.controls.email?.errors);
+  }
+
 }

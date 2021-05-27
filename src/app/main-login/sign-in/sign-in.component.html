@@ -11,12 +11,9 @@
             </mat-label>
             <input matInput type="text" name="email" placeholder="milton.velillac@gmail.com"
                 formControlName="email" />
-            <mat-error *ngIf="form.get('email')?.errors?.required">
-                {{uiMessages.requieredField}}
-            </mat-error>
-            <mat-error *ngIf="form.get('email')?.errors?.email">
-                {{uiMessages.wrongEmail}}
-            </mat-error>
+                <mat-error *ngIf="getEmailErrorMessage() as emailErrorMessage" id="emailRequiredError">
+                    {{emailErrorMessage}}
+                </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -24,9 +21,8 @@
                 <mat-icon matSuffix>lock</mat-icon> Password
             </mat-label>
             <input matInput type="password" name="password" id="password" formControlName="password" />
-            <mat-error *ngIf="form.get('password')?.errors?.pattern || form.get('password')?.errors?.required"
-                id="passwordPatternError">
-                {{uiMessages.wrongPasswor}}
+            <mat-error *ngIf="getPasswordErrorMessage() as passwordErrorMessage">
+                {{passwordErrorMessage}}
             </mat-error>
         </mat-form-field>
         <br>

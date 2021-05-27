@@ -64,4 +64,8 @@ export class PasswordResetComponent {
     this.dialogRef.close();
   }
 
+  getEmailErrorMessage(): string | undefined {
+    return this.sessionLogicService.getEmailErrorMessage(this.form?.controls.email?.errors);
+  }
+
 }

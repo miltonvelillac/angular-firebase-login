@@ -112,30 +112,19 @@ export class SignUpComponent implements OnInit {
   }
 
   getRepeatPasswordErrorMessage(): string | undefined {
-    if (this.form?.get('passwordRepeat')?.errors?.pattern || this.form?.get('passwordRepeat')?.errors?.required) {
-      return this.uiMessages.wrongPasswor;
-    } else if(this.form?.get('passwordRepeat')?.errors?.invalidRepeatPassword) {
-      return this.uiMessages.wrongRepeatPassword;
-    }
-    return undefined
+    return this.sessionLogicService.getEmailErrorMessage(this.form?.controls.passwordRepeat?.errors);
+  }
+
+  getPasswordErrorMessage(): string | undefined {
+    return this.sessionLogicService.getPasswordErrorMessage(this.form?.controls.password?.errors);
   }
 
   getNameErrorMessage(): string | undefined {
-    if (this.form?.get('name')?.errors?.required) {
-      return this.uiMessages.requieredField;
-    } else if(this.form?.get('name')?.errors?.maxlength) {
-      return this.uiMessages.wrongNameLength.replace('{charactersNumber}', `${this.maxNameCharacters}`);      
-    }
-    return undefined
+    return this.sessionLogicService.getNameErrorMessage(this.form?.controls.name?.errors, this.maxNameCharacters);
   }
 
   getEmailErrorMessage(): string | undefined {
-    if (this.form?.controls.email?.errors?.required) {
-      return this.uiMessages.requieredField;
-    } else if(this.form?.controls.email?.errors?.email) {
-      return this.uiMessages.wrongEmail;      
-    }
-    return undefined
+    return this.sessionLogicService.getEmailErrorMessage(this.form?.controls.email?.errors);
   }
 
 }
