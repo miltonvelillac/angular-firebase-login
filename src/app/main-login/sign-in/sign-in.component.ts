@@ -6,6 +6,7 @@ import firebase from 'firebase/app';
 import { SessionUserService } from 'src/app/shared/services/session-user/session-user.service';
 import { requiredFieldMessage, wrongEmailMessage, wrongPasswordMessage } from 'src/app/shared/utils/constants';
 import { passwordRegex } from 'src/app/shared/utils/regex';
+import { SessionLogicService } from '../shared/session-logic/session-logic.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -29,7 +30,8 @@ export class SignInComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
-    private sessionUserService: SessionUserService
+    private sessionUserService: SessionUserService,
+    private sessionLogicService: SessionLogicService
   ) { }
 
   ngOnInit(): void {}
@@ -57,7 +59,7 @@ export class SignInComponent implements OnInit {
       console.log('signIp sucess', userCredentials);
     } catch (error) {
       console.log('Error..................', error);
-      this.errorSignInMessage = error.message;
+      this.errorSignInMessage = this.sessionLogicService.addErrorMessage(error);
     } finally {
       this.signInLoading = false;
       this.cdr.detectChanges();
@@ -65,15 +67,18 @@ export class SignInComponent implements OnInit {
   }
 
   async loginGoogle(): Promise<void> {
+    this.signInLoading = true;
     try {
       const userCredentials: firebase.auth.UserCredential = await this.sessionUserService.signInOrSignUpGoogle();
       console.log('signIp Google sucess', userCredentials);
     } catch (error) {
+      this.errorSignInMessage = this.sessionLogicService.addErrorMessage(error);
       console.log('Error Gooogle..................', error);
-      this.errorSignInMessage = error.message;
+    } finally {
+      this.signInLoading = false;
       this.cdr.detectChanges();
     }
-  }
+  }  
 
   onLoginSuccessful(result: any): void {
     console.log('login', result);

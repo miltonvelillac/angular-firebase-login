@@ -9,6 +9,7 @@ import { SessionUserService } from 'src/app/shared/services/session-user/session
 import { requiredFieldMessage, wrongEmailMessage, wrongPasswordMessage, wrongRepeatPasswordMessage, wrongNameLengthMessage } from 'src/app/shared/utils/constants';
 import { FormsValidationsService } from 'src/app/shared/utils/forms-validations/forms-validations.service';
 import { passwordRegex } from 'src/app/shared/utils/regex';
+import { SessionLogicService } from '../shared/session-logic/session-logic.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -37,7 +38,8 @@ export class SignUpComponent implements OnInit {
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
     private formsValidationsService: FormsValidationsService,
-    private sessionUserService: SessionUserService
+    private sessionUserService: SessionUserService,
+    private sessionLogicService: SessionLogicService
   ) { }
 
   ngOnInit(): void {
@@ -88,7 +90,7 @@ export class SignUpComponent implements OnInit {
       console.log('signUp sucess', userCredentials);
     } catch (error) {
       console.log('Error..................', error);
-      this.errorSignUpMessage = error.message;
+      this.errorSignUpMessage = this.sessionLogicService.addErrorMessage(error);
     } finally {
       this.signUpLoading = false;
       this.cdr.detectChanges();
@@ -96,11 +98,16 @@ export class SignUpComponent implements OnInit {
   }
 
   async signUpGoogle(): Promise<void> {
+    this.signUpLoading = true;
     try {
       const userCredentials: firebase.auth.UserCredential = await this.sessionUserService.signInOrSignUpGoogle();
       console.log('signIp Google sucess', userCredentials);
     } catch (error) {
+      this.errorSignUpMessage = this.sessionLogicService.addErrorMessage(error);
       console.log('Error Gooogle..................', error);
+    } finally {
+      this.signUpLoading = false;
+      this.cdr.detectChanges();
     }
   }
 

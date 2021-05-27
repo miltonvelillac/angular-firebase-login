@@ -17,6 +17,13 @@
     &__form {
         display: flex;
         flex-direction: column;
+
+        &__forgot-password {
+            text-align: center;
+            margin-top: 10px;
+            cursor: pointer;
+            text-decoration: underline;
+        }
     }
 }
 
