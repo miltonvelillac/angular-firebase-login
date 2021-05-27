@@ -23,6 +23,10 @@ export class SessionUserService {
     return this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
   }
 
+  sendResetPassword(email: string): Promise<void> {
+    return this.auth.sendPasswordResetEmail(email);
+  }
+
   logOut(): Promise<void> {
     return this.auth.signOut();
   }

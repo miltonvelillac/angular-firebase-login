@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { SessionUserService } from 'src/app/shared/services/session-user/session-user.service';
 import { requiredFieldMessage, wrongEmailMessage } from 'src/app/shared/utils/constants';
 import { SessionLogicService } from '../../session-logic/session-logic.service';
@@ -28,7 +28,6 @@ export class PasswordResetComponent {
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
     public dialogRef: MatDialogRef<PasswordResetComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
     private sessionUserService: SessionUserService,
     private sessionLogicService: SessionLogicService
   ) { }
@@ -50,7 +49,7 @@ export class PasswordResetComponent {
 
   async handleResetPassword(email: string): Promise<void> {
     try {
-      
+      await this.sessionUserService.sendResetPassword(email);
     } catch (error) {
       this.errorResetPasswordMessage = this.sessionLogicService.addErrorMessage(error);
     } finally {
