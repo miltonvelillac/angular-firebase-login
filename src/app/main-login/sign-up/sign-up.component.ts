@@ -1,11 +1,13 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-import { tap, distinctUntilChanged } from 'rxjs/operators';
-
-import { requiredFieldMessage, wrongEmailMessage, wrongPasswordMessage, wrongRepeatPasswordMessage, wrongNameLengthMessage } from 'src/app/shared/utils/constants';
+import firebase from 'firebase/app';
+import { distinctUntilChanged, tap } from 'rxjs/operators';
+import { SessionUserService } from 'src/app/shared/services/session-user/session-user.service';
 import { FormsValidationsService } from 'src/app/shared/utils/forms-validations/forms-validations.service';
 import { passwordRegex } from 'src/app/shared/utils/regex';
+import { SessionLogicService } from '../shared/session-logic/session-logic.service';
+
 
 @Component({
   selector: 'app-sign-up',
@@ -18,18 +20,16 @@ export class SignUpComponent implements OnInit {
   maxNameCharacters = 50;
   form: FormGroup = this.createForm();
 
-  uiMessages = {
-    requieredField: requiredFieldMessage,
-    wrongEmail: wrongEmailMessage,
-    wrongPasswor: wrongPasswordMessage,
-    wrongRepeatPassword: wrongRepeatPasswordMessage,
-    wrongNameLength: wrongNameLengthMessage
-  };
+  signUpLoading = false;
+  errorSignUpMessage: string | undefined;
 
 
   constructor(
     private fb: FormBuilder,
-    private formsValidationsService: FormsValidationsService
+    private cdr: ChangeDetectorRef,
+    private formsValidationsService: FormsValidationsService,
+    private sessionUserService: SessionUserService,
+    private sessionLogicService: SessionLogicService
   ) { }
 
   ngOnInit(): void {
@@ -65,34 +65,56 @@ export class SignUpComponent implements OnInit {
   }
 
   signUp(): void {
-    
+    this.errorSignUpMessage = undefined;
+
+    if (!this.form.valid) { return; }
+
+    this.signUpLoading = true;
+    const { email, password } = this.form.getRawValue();
+    this.singUpEmailHandle(email, password)
+  }
+  
+  async singUpEmailHandle(email: string, password: string): Promise<void> {
+    try {
+      const userCredentials: firebase.auth.UserCredential = await this.sessionUserService.signUpEmail(email, password);
+      console.log('signUp sucess', userCredentials);
+    } catch (error) {
+      console.log('Error..................', error);
+      this.errorSignUpMessage = this.sessionLogicService.addErrorMessage(error);
+    } finally {
+      this.signUpLoading = false;
+      this.cdr.detectChanges();
+    }
+  }
+
+  async signUpGoogle(): Promise<void> {
+    this.signUpLoading = true;
+    try {
+      const userCredentials: firebase.auth.UserCredential = await this.sessionUserService.signInOrSignUpGoogle();
+      console.log('signIp Google sucess', userCredentials);
+    } catch (error) {
+      this.errorSignUpMessage = this.sessionLogicService.addErrorMessage(error);
+      console.log('Error Gooogle..................', error);
+    } finally {
+      this.signUpLoading = false;
+      this.cdr.detectChanges();
+    }
   }
 
   getRepeatPasswordErrorMessage(): string | undefined {
-    if (this.form?.get('passwordRepeat')?.errors?.pattern || this.form?.get('passwordRepeat')?.errors?.required) {
-      return this.uiMessages.wrongPasswor;
-    } else if(this.form?.get('passwordRepeat')?.errors?.invalidRepeatPassword) {
-      return this.uiMessages.wrongRepeatPassword;
-    }
-    return undefined
+    return this.sessionLogicService.getEmailErrorMessage(this.form?.controls.passwordRepeat?.errors);
+  }
+
+  getPasswordErrorMessage(): string | undefined {
+    return this.sessionLogicService.getPasswordErrorMessage(this.form?.controls.password?.errors);
   }
 
   getNameErrorMessage(): string | undefined {
-    if (this.form?.get('name')?.errors?.required) {
-      return this.uiMessages.requieredField;
-    } else if(this.form?.get('name')?.errors?.maxlength) {
-      return this.uiMessages.wrongNameLength.replace('{charactersNumber}', `${this.maxNameCharacters}`);      
-    }
-    return undefined
+    return this.sessionLogicService.getNameErrorMessage(this.form?.controls.name?.errors, this.maxNameCharacters);
   }
 
   getEmailErrorMessage(): string | undefined {
-    if (this.form?.controls.email?.errors?.required) {
-      return this.uiMessages.requieredField;
-    } else if(this.form?.controls.email?.errors?.email) {
-      return this.uiMessages.wrongEmail;      
-    }
-    return undefined
+    return this.sessionLogicService.getEmailErrorMessage(this.form?.controls.email?.errors);
   }
 
 }

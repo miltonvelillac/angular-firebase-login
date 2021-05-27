@@ -1,5 +1,9 @@
 <form *ngIf="form" [formGroup]="form" (ngSubmit)="signUp()" class="signup">
-    <h1>Create Account</h1>
+    <h1 class="signup__title">Create Account</h1>
+    <mat-error *ngIf="errorSignUpMessage && !signUpLoading">
+        <p>{{errorSignUpMessage}}</p>
+    </mat-error>
+    <mat-progress-bar mode="indeterminate" *ngIf="signUpLoading" class="signup__spinner"></mat-progress-bar>
     <div class="signup__form">
         <mat-form-field appearance="outline">
             <mat-label>
@@ -27,9 +31,8 @@
                 <mat-icon matSuffix>lock</mat-icon> Password
             </mat-label>
             <input matInput type="password" name="password" id="password" formControlName="password" />
-            <mat-error *ngIf="form.get('password')?.errors?.pattern || form.get('password')?.errors?.required"
-                id="passwordPatternError">
-                {{uiMessages.wrongPasswor}}
+            <mat-error *ngIf="getPasswordErrorMessage() as passwordErrorMessage">
+                {{passwordErrorMessage}}
             </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
@@ -42,6 +45,14 @@
             </mat-error>
         </mat-form-field>
         <br>
-        <app-main-button class="big">SIGN UP</app-main-button>
+        <app-main-button class="big" [disabled]="signUpLoading">SIGN UP</app-main-button>
+    </div>
+
+    <div class="signup__social-media">
+        <p>Or use your social media to sign up</p>
+        <app-social-media-session
+            [disabled]="signUpLoading"
+            (clickOnGoogle)="signUpGoogle()">
+        </app-social-media-session>
     </div>
 </form>

@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { SharedModule } from '../shared/shared.module';
 
@@ -11,14 +12,17 @@ import { MainLoginRoutingModule } from './main-login-routing.module';
 import { MainLoginComponent } from './main-login.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
-
+import { SocialMediaSessionComponent } from './social-media-session/social-media-session.component';
+import { PasswordResetComponent } from './shared/components/password-reset/password-reset.component';
 
 
 @NgModule({
   declarations: [
     MainLoginComponent,
     SignInComponent,
-    SignUpComponent
+    SignUpComponent,
+    SocialMediaSessionComponent,
+    PasswordResetComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +31,8 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    MatProgressBarModule
   ]
 })
 export class MainLoginModule { }

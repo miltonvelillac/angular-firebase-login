@@ -1,7 +1,33 @@
 .login {
     padding: 50px;
+
+    &__title {
+        text-align: center;
+        font-weight: 500;
+    }
+    &__spinner {
+        margin-bottom: 10px;
+    }
+    &__social-media {
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
     &__form {
         display: flex;
         flex-direction: column;
+
+        &__forgot-password {
+            text-align: center;
+            margin-top: 10px;
+            cursor: pointer;
+            text-decoration: underline;
+        }
     }
 }
+
+a[disabled] {
+    pointer-events: none;
+    cursor: default;
+ }

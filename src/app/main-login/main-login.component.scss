@@ -5,7 +5,7 @@
 
   &__box {
     flex: 1;
-    height: 500px;
+    height: 600px;
     max-width: 1200px;
     margin: auto;
     display: flex;
@@ -33,6 +33,9 @@
 
     &__form {
       flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
   }
 }

@@ -1,18 +1,19 @@
 <form *ngIf="form" [formGroup]="form" (ngSubmit)="login()" class="login">
-    <h1>Sing In</h1>
+    <h1 class="login__title">Sing In</h1>
+    <mat-error *ngIf="errorSignInMessage && !signInLoading">
+        <p>{{errorSignInMessage}}</p>
+    </mat-error>
+    <mat-progress-bar mode="indeterminate" *ngIf="signInLoading" class="login__spinner"></mat-progress-bar>
     <div class="login__form">
         <mat-form-field appearance="outline">
             <mat-label>
                 <mat-icon matSuffix>email</mat-icon> Email
             </mat-label>
-            <input matInput type="text" name="email" id="email" placeholder="milton.velillac@gmail.com"
+            <input matInput type="text" name="email" placeholder="milton.velillac@gmail.com"
                 formControlName="email" />
-            <mat-error *ngIf="form.get('email')?.errors?.required" id="emailRequiredError">
-                {{uiMessages.requieredField}}
-            </mat-error>
-            <mat-error *ngIf="form.get('email')?.errors?.email" id="emailError">
-                {{uiMessages.wrongEmail}}
-            </mat-error>
+                <mat-error *ngIf="getEmailErrorMessage() as emailErrorMessage" id="emailRequiredError">
+                    {{emailErrorMessage}}
+                </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -20,12 +21,20 @@
                 <mat-icon matSuffix>lock</mat-icon> Password
             </mat-label>
             <input matInput type="password" name="password" id="password" formControlName="password" />
-            <mat-error *ngIf="form.get('password')?.errors?.pattern || form.get('password')?.errors?.required"
-                id="passwordPatternError">
-                {{uiMessages.wrongPasswor}}
+            <mat-error *ngIf="getPasswordErrorMessage() as passwordErrorMessage">
+                {{passwordErrorMessage}}
             </mat-error>
         </mat-form-field>
         <br>
-        <app-main-button class="big">SIGN IN</app-main-button>
+        <app-main-button class="big" [disabled]="signInLoading">SIGN IN</app-main-button>
+        <a class="login__form__forgot-password" (click)="forgotYourPassword()">Forgot your password?</a>      
+    </div>
+
+    <div class="login__social-media">
+        <p>Or use your social media to sign in</p>
+        <app-social-media-session
+            [disabled]="signInLoading"
+            (clickOnGoogle)="loginGoogle()">
+        </app-social-media-session>        
     </div>
 </form>
