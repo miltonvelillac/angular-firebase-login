@@ -11,13 +11,16 @@ export class SessionUserService {
     private auth: AngularFireAuth
   ) { }
 
-  signIn(email: string, password: string): Promise<firebase.auth.UserCredential> {
-    this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  signInEmail(email: string, password: string): Promise<firebase.auth.UserCredential> {
     return this.auth.signInWithEmailAndPassword(email, password);
   }
 
-  signUp(email: string, password: string): Promise<firebase.auth.UserCredential> {
+  signUpEmail(email: string, password: string): Promise<firebase.auth.UserCredential> {
     return this.auth.createUserWithEmailAndPassword(email, password);
+  }
+
+  signInGoogle(): Promise<firebase.auth.UserCredential> {
+    return this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
   }
 
   logOut(): Promise<void> {

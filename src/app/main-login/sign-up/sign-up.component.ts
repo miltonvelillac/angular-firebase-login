@@ -71,7 +71,7 @@ export class SignUpComponent implements OnInit {
     if (!this.form.valid) { return; }
     const { email, password } = this.form.getRawValue();
     try {
-      const userCredentials: firebase.auth.UserCredential = await this.sessionUserService.signUp(email, password);
+      const userCredentials: firebase.auth.UserCredential = await this.sessionUserService.signUpEmail(email, password);
       console.log('signUp sucess', userCredentials);
     } catch (error) {
       console.log('Error..................', error)

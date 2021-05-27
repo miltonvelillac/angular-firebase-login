@@ -43,14 +43,25 @@ export class SignInComponent implements OnInit {
   async login(): Promise<void> {
     this.errorSignInMessage = undefined;
     if (!this.form.valid) { return; }
+
     const { email, password } = this.form.getRawValue();
-    // this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
 
     try {
-      const userCredentials: firebase.auth.UserCredential = await this.sessionUserService.signIn(email, password);
-      console.log('signUp sucess', userCredentials);
+      const userCredentials: firebase.auth.UserCredential = await this.sessionUserService.signInEmail(email, password);
+      console.log('signIp sucess', userCredentials);
     } catch (error) {
       console.log('Error..................', error);
+      this.errorSignInMessage = error.message;
+      this.cdr.detectChanges();
+    }
+  }
+
+  async loginGoogle(): Promise<void> {
+    try {
+      const userCredentials: firebase.auth.UserCredential = await this.sessionUserService.signInGoogle();
+      console.log('signIp Google sucess', userCredentials);
+    } catch (error) {
+      console.log('Error Gooogle..................', error);
       this.errorSignInMessage = error.message;
       this.cdr.detectChanges();
     }
